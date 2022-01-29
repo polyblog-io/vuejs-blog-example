@@ -2,82 +2,47 @@
     <div class="homePage">
         <h1>Recent Articles</h1>
         <div class="articles">
-            <!-- Article 1 -->
-            <router-link to="/en/slug" class="article link">
-                <img src="https://images.unsplash.com/photo-1643120382882-2e3de81f81c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" alt="Card 1">
 
-                <div class="articleBody">
-                    <div class="info">
-                        <span class="author">Jade Thompson</span>
-                        <span class="createdAt">12 Jan, 2022</span>
+            <!-- Article  -->
+            <template 
+                v-for="article in articles"
+            >
+                <router-link 
+                    v-if="article.locale === locale"
+                    to = '/locale/slug'
+                    :key="article._id"
+                    class="article link"
+                >
+                    <img :src="article.coverImg" :alt="article.title">
+                    <div class="articleBody">
+                        <div class="info">
+                            <span class="author">{{article.author}}</span>
+                            <span class="createdAt">{{article.createdAt}}</span>
+                        </div>
+                        <h3 class="title">{{article.title}}</h3>
+                        <p class="subtitle">{{article.subtitle}}</p>
                     </div>
-                    <h3 class="title">Content Marketing Strategies</h3>
-                    <p class="subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, officia alias inventore nam commodi asperiores.</p>
-                </div>
-            </router-link>
-
-            <!-- Article 2 -->
-            <router-link to="/en/slug" class="article link">
-                <img src="https://images.unsplash.com/photo-1643120382882-2e3de81f81c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" alt="Card 1">
-
-                <div class="articleBody">
-                    <div class="info">
-                        <span class="author">Jade Thompson</span>
-                        <span class="createdAt">12 Jan, 2022</span>
-                    </div>
-                    <h3 class="title">Content Marketing Strategies</h3>
-                    <p class="subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, officia alias inventore nam commodi asperiores.</p>
-                </div>
-            </router-link>
-
-            <!-- Article 3 -->
-            <router-link to="/en/slug" class="article link">
-                <img src="https://images.unsplash.com/photo-1643120382882-2e3de81f81c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" alt="Card 1">
-
-                <div class="articleBody">
-                    <div class="info">
-                        <span class="author">Jade Thompson</span>
-                        <span class="createdAt">12 Jan, 2022</span>
-                    </div>
-                    <h3 class="title">Content Marketing Strategies</h3>
-                    <p class="subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, officia alias inventore nam commodi asperiores.</p>
-                </div>
-            </router-link>
-
-            <!-- Article 4 -->
-            <router-link to="/en/slug" class="article link">
-                <img src="https://images.unsplash.com/photo-1643120382882-2e3de81f81c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" alt="Card 1">
-
-                <div class="articleBody">
-                    <div class="info">
-                        <span class="author">Jade Thompson</span>
-                        <span class="createdAt">12 Jan, 2022</span>
-                    </div>
-                    <h3 class="title">Content Marketing Strategies</h3>
-                    <p class="subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, officia alias inventore nam commodi asperiores.</p>
-                </div>
-            </router-link>
-
-            <!-- Article 5 -->
-            <router-link to="/en/slug" class="article link">
-                <img src="https://images.unsplash.com/photo-1643120382882-2e3de81f81c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60" alt="Card 1">
-
-                <div class="articleBody">
-                    <div class="info">
-                        <span class="author">Jade Thompson</span>
-                        <span class="createdAt">12 Jan, 2022</span>
-                    </div>
-                    <h3 class="title">Content Marketing Strategies</h3>
-                    <p class="subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum, officia alias inventore nam commodi asperiores.</p>
-                </div>
-            </router-link>
+                </router-link>
+            </template>
         </div>
     </div>
 </template>
 
 <script>
+import { articles } from '../DummyData';
+import { useRoute } from 'vue-router';
 export default {
-    name: 'HomePage'
+    name: 'HomePage',
+    data () {
+        return {
+            locale: '',
+            articles
+        }
+    },
+    mounted() {
+        const route = useRoute()
+        this.locale = route.params.locale;
+    },
 }
 </script>
 
