@@ -13,11 +13,11 @@
                     :key="article._id"
                     class="article link"
                 >
-                    <img :src="article.coverImg" :alt="article.title">
+                    <img :src="article.coverUrl" :alt="article.title">
                     <div class="articleBody">
                         <div class="info">
                             <span class="author">{{article.author}}</span>
-                            <span class="createdAt">{{article.createdAt}}</span>
+                            <span class="createdAt">{{new Date(article.creationTime).toLocaleString(article.locale, {dateStyle: 'long'})}}</span>
                         </div>
                         <h3 class="title">{{article.title}}</h3>
                         <p class="subtitle">{{article.subtitle}}</p>
@@ -29,20 +29,40 @@
 </template>
 
 <script>
-import { articles } from '../DummyData';
+import { getArticles } from '@polyblog/polyblog-js-client';
 import { useRoute } from 'vue-router';
 export default {
     name: 'HomePage',
     data () {
+        const route = useRoute()
+        
         return {
-            locale: '',
-            articles
+            locale: route.params.locale,
+            articles: []
         }
     },
-    mounted() {
-        const route = useRoute()
-        this.locale = route.params.locale;
+    methods: {
+        async fetchArticles () {
+            let allArticles = await getArticles({
+                organizationId: 'c398463407b5c12f27f9aed4',
+                project: 'polyblog',
+                locale: this.locale, 
+                published: true,
+                sortDirection: 'DESC'
+            })
+            console.warn('Allarticles', allArticles)
+            console.log('locale', this.locale)
+            this.articles = allArticles
+        }
     },
+    created() {
+        this.fetchArticles();
+    },
+    // mounted() {
+    //     const route = useRoute()
+    //     this.locale = route.params.locale;
+    // },
+    
 }
 </script>
 
