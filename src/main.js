@@ -5,6 +5,7 @@ import HomePage from './components/HomePage';
 import ArticlePage from './components/ArticlePage';
 
 const routes = [
+    {path: '/', name: 'home', redirect: '/en', component: HomePage},
     {path: '/:locale', component: HomePage},
     {path: '/:locale/:slug', component: ArticlePage},
 ]

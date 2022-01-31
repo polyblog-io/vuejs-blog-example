@@ -9,11 +9,11 @@
             >
                 <router-link 
                     v-if="article.locale === locale"
-                    to = '/locale/slug'
+                    :to = "'/' + article.locale + '/' + article.slugLocalized"
                     :key="article._id"
                     class="article link"
                 >
-                    <img :src="article.coverUrl" :alt="article.title">
+                    <img :src="article.coverUrl" :alt="article.title" />
                     <div class="articleBody">
                         <div class="info">
                             <span class="author">{{article.author}}</span>
@@ -35,7 +35,7 @@ export default {
     name: 'HomePage',
     data () {
         const route = useRoute()
-        
+
         return {
             locale: route.params.locale,
             articles: []
@@ -51,18 +51,13 @@ export default {
                 sortDirection: 'DESC'
             })
             console.warn('Allarticles', allArticles)
-            console.log('locale', this.locale)
             this.articles = allArticles
         }
     },
     created() {
         this.fetchArticles();
     },
-    // mounted() {
-    //     const route = useRoute()
-    //     this.locale = route.params.locale;
-    // },
-    
+
 }
 </script>
 
